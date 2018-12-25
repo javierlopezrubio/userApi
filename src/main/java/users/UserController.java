@@ -15,6 +15,7 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 @RestController
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
@@ -28,12 +29,12 @@ public class UserController {
     private void generateData(){
     }
 
-    @RequestMapping("/users/getUsers")
+    @RequestMapping("/getUsers")
     public ResponseEntity<?> getAllUsers(){
         return new ResponseEntity<List<?>>(userRepo.findAll(), HttpStatus.OK);
     }
 
-    @PostMapping("/users/createUsers")
+    @PostMapping("/createUsers")
     public ResponseEntity<?> addUser(@RequestBody User newUser){
         try {
             if(!addressRepo.existsByIda(newUser.getAddress().getIda())){
@@ -56,7 +57,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping("/users/getUsersById/{userId}")
+    @RequestMapping("/getUsersById/{userId}")
     public ResponseEntity<?> getUserById(@PathVariable String userId){
         if(!validateNumber(userId))
             return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
@@ -70,7 +71,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/users/updateUsersById/{userId}")
+    @PutMapping("/updateUsersById/{userId}")
     public ResponseEntity<?> updateUser(@PathVariable String userId, @RequestBody User toUpdate){
         if(!validateNumber(userId))
             return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
@@ -103,7 +104,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/users/deleteUsersById/{userId}")
+    @DeleteMapping("/deleteUsersById/{userId}")
     public ResponseEntity<?> deleteUser(@PathVariable String userId){
         if(!validateNumber(userId))
             return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
