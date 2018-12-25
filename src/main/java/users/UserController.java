@@ -65,8 +65,7 @@ public class UserController {
                 return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
             else {
                 int id = Integer.parseInt(userId);
-                userRepo.findUserByIdu(id);
-                return new ResponseEntity<>(HttpStatus.OK);
+                return new ResponseEntity<>(userRepo.findUserByIdu(id), HttpStatus.OK);
             }
         }
     }
