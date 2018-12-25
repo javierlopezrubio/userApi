@@ -18,6 +18,7 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
+    //Id generation service for mongo database
     @Autowired
     private NextIdService nextId;
     @Autowired
