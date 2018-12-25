@@ -44,16 +44,13 @@ public class UserController {
             }else{
                 Address choosenAddress = addressRepo.findByIda(newUser.getAddress().getIda());
                 if(!choosenAddress.equalAddress(newUser.getAddress())) {
-                    System.out.println("No es igual");
                     return new ResponseEntity<>("", HttpStatus.METHOD_NOT_ALLOWED);
                 }
-                System.out.println("Es igual");
             }
             int id = nextId.getNextId("user_id");
-            System.out.println(id);
             newUser.setIdu(id);
             User created = userRepo.save(newUser);
-            return new ResponseEntity<>(created, HttpStatus.OK);
+            return new ResponseEntity<>(created, HttpStatus.CREATED);
         }catch (Exception ex){
             return new ResponseEntity<>("", HttpStatus.METHOD_NOT_ALLOWED);
         }
