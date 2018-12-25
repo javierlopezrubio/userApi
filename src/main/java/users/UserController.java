@@ -85,13 +85,19 @@ public class UserController {
                 int id = Integer.parseInt(userId);
                 Address updatedAddress = toUpdate.getAddress();
                 if(updatedAddress.getIda()==0) {
-                    if(!updatedAddress.equals(userRepo.findUserByIdu(id).getAddress())){
+                    if(!updatedAddress.equalAddress(userRepo.findUserByIdu(id).getAddress())){
                         int ida = nextId.getNextId("address_id");
                         updatedAddress.setIda(ida);
                         addressRepo.save(updatedAddress);
                     }
-                }else if(!addressRepo.existsByIda(toUpdate.getAddress().getIda())){
-                    return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+                }else{
+                    if(!addressRepo.existsByIda(toUpdate.getAddress().getIda())){
+                        return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+                    }else{
+                        int ida = toUpdate.getAddress().getIda();
+                        addressRepo.deleteByIda(ida);
+                        addressRepo.save(updatedAddress);
+                    }
                 }
                 userRepo.deleteByIdu(id);
                 toUpdate.setIdu(id);

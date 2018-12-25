@@ -9,5 +9,6 @@ public interface AddressRepo extends MongoRepository<Address,Integer> {
     List<Address> findAll();
     Address findByIda(int id);
     boolean existsByIda(int id);
+    void deleteByIda(int id);
 
 }
